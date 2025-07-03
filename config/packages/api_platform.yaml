@@ -1,0 +1,11 @@
+api_platform:
+    title: 'API Platform Exercise'
+    description: 'API Platform Learning Project'
+    version: '1.0.0'
+    show_webby: false
+    swagger:
+        versions: [ 3 ]
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
