@@ -1,16 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Dto\Input\Recipe\CreateRecipeInput;
 use App\Enum\RecipeSkillLevel;
 use App\Repository\RecipeRepository;
+use App\State\RecipePostStateProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
-#[ApiResource]
+#[ApiResource (
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(
+            input: CreateRecipeInput::class,
+            processor: RecipePostStateProcessor::class
+        ),
+    ],
+)]
 class Recipe
 {
     #[ORM\Id]
@@ -31,7 +49,7 @@ class Recipe
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull]
+    #[Ignore]
     private ?User $owner = null;
 
     #[ORM\Column]
@@ -92,7 +110,7 @@ class Recipe
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): static
+    public function setOwner(?UserInterface $owner): static
     {
         $this->owner = $owner;
 
