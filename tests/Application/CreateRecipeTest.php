@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application;
 
 use App\Entity\User;
@@ -28,7 +30,7 @@ class CreateRecipeTest extends ApplicationTestCase
         $this->loadFixtures($fixture);
     }
 
-    public function test_createRecipeNotAllowedWithoutAuthentication()
+    public function testCreateRecipeNotAllowedWithoutAuthentication(): void
     {
         self::$client->request(
             'POST',
@@ -42,15 +44,14 @@ class CreateRecipeTest extends ApplicationTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function test_createRecipe()
+    public function testCreateRecipe(): void
     {
         $this->userFixture->authenticate(self::$client);
         $content = json_encode([
             'title' => 'Test recipe',
             'difficulty' => 'easy',
-            'description' => 'Une délicieuse recette de test'
+            'description' => 'Une délicieuse recette de test',
         ]);
-
 
         self::$client->request(
             'POST',
@@ -63,5 +64,4 @@ class CreateRecipeTest extends ApplicationTestCase
 
         $this->assertResponseStatusCodeSame(201);
     }
-
 }

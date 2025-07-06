@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
-#[ApiResource (
+#[ApiResource(
     operations: [
         new Get(),
         new GetCollection(),
@@ -50,7 +50,7 @@ class Recipe
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Ignore]
-    private ?User $owner = null;
+    private ?UserInterface $owner = null;
 
     #[ORM\Column]
     private \DateTimeImmutable $createdAt {
@@ -116,5 +116,4 @@ class Recipe
 
         return $this;
     }
-
 }

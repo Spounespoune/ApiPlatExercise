@@ -6,7 +6,7 @@ use Infrastructure\ApplicationTestCase;
 
 class SmokeTest extends ApplicationTestCase
 {
-    public function testHomePage()
+    public function testHomePage(): void
     {
         $client = self::initialize();
         $client->request('GET', '/');

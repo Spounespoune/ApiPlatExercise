@@ -4,6 +4,7 @@ namespace Infrastructure;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
+use Fixtures\FixtureInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -30,6 +31,10 @@ class ApplicationTestCase extends WebTestCase
         return self::$client;
     }
 
+    /**
+     * @param array<int, FixtureInterface> $fixtures
+     * @return void
+     */
     protected function loadFixtures(array $fixtures): void
     {
         foreach ($fixtures as $fixture) {

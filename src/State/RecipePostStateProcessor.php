@@ -9,16 +9,14 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Recipe;
 use App\UseCases\CreateRecipeUseCase;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 
 readonly class RecipePostStateProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly CreateRecipeUseCase $createRecipeUseCase,
+        private CreateRecipeUseCase $createRecipeUseCase,
         private ProcessorInterface $persistProcessor,
-    )
-    {}
+    ) {
+    }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Recipe
     {
