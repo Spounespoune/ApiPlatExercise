@@ -25,6 +25,7 @@ class CreateRecipeInput
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -36,6 +37,7 @@ class CreateRecipeInput
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -47,6 +49,7 @@ class CreateRecipeInput
     public function setDifficulty(?RecipeSkillLevel $difficulty): CreateRecipeInput
     {
         $this->difficulty = $difficulty;
+
         return $this;
     }
 }

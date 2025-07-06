@@ -14,12 +14,11 @@ use App\Repository\RecipeRepository;
 use App\State\RecipePostStateProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
-#[ApiResource (
+#[ApiResource(
     operations: [
         new Get(),
         new GetCollection(),
@@ -110,11 +109,10 @@ class Recipe
         return $this->owner;
     }
 
-    public function setOwner(?UserInterface $owner): static
+    public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
 
         return $this;
     }
-
 }

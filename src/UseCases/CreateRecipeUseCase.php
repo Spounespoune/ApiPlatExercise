@@ -16,7 +16,6 @@ readonly class CreateRecipeUseCase
 
     public function execute(CreateRecipeInput $recipeInput): Recipe
     {
-
         $user = $this->security->getUser();
 
         if (!$user) {

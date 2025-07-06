@@ -37,3 +37,9 @@ fpm:
 
 postgresql:
 	docker exec -it postgresql bash
+
+csfix:
+	./vendor/bin/php-cs-fixer fix src
+
+phpstan:
+	./vendor/bin/phpstan analyse
