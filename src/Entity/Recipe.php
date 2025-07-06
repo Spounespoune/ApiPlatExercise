@@ -14,7 +14,6 @@ use App\Repository\RecipeRepository;
 use App\State\RecipePostStateProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,7 +49,7 @@ class Recipe
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Ignore]
-    private ?UserInterface $owner = null;
+    private ?User $owner = null;
 
     #[ORM\Column]
     private \DateTimeImmutable $createdAt {
@@ -110,7 +109,7 @@ class Recipe
         return $this->owner;
     }
 
-    public function setOwner(?UserInterface $owner): static
+    public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
 
