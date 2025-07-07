@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UseCases;
 
 use App\Entity\Recipe;
+use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 
 readonly class CreateRecipeUseCase
@@ -17,7 +18,7 @@ readonly class CreateRecipeUseCase
     {
         $user = $this->security->getUser();
 
-        if (!$user) {
+        if (!$user || !$user instanceof User) {
             throw new \Exception('User not found');
         }
 
