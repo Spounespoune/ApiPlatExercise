@@ -14,7 +14,7 @@ use App\Repository\RecipeRepository;
 use App\State\RecipePostStateProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
@@ -27,36 +27,39 @@ use Symfony\Component\Validator\Constraints as Assert;
             processor: RecipePostStateProcessor::class
         ),
     ],
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
 )]
 class Recipe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read', 'write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['read', 'write'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $description = null;
 
     #[ORM\Column(enumType: RecipeSkillLevel::class)]
     #[Assert\NotNull]
+    #[Groups(['read', 'write'])]
     private ?RecipeSkillLevel $difficulty = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Ignore]
+    #[Groups(['read'])]
     private ?User $owner = null;
 
     #[ORM\Column]
-    private \DateTimeImmutable $createdAt {
-        get {
-            return $this->createdAt;
-        }
-    }
+    #[Groups(['read'])]
+    private \DateTimeImmutable $createdAt;
 
     public function __construct()
     {
@@ -115,4 +118,10 @@ class Recipe
 
         return $this;
     }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
 }

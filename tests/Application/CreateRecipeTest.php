@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application;
 
 use App\Entity\User;
+use App\Repository\RecipeRepository;
 use Fixtures\UserFixture;
 use Infrastructure\ApplicationTestCase;
 
@@ -63,5 +64,10 @@ class CreateRecipeTest extends ApplicationTestCase
         );
 
         $this->assertResponseStatusCodeSame(201);
+
+        $recipeRepository = self::$client->getContainer()->get(RecipeRepository::class);
+        $recipe = $recipeRepository->findOneBy(['title' => 'Test recipe']);
+
+        $this->assertNotNull($recipe);
     }
 }

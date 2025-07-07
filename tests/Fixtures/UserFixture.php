@@ -6,7 +6,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DependencyInjection\Container;
 
-class UserFixture implements FixtureInterface
+readonly class UserFixture implements FixtureInterface
 {
     public function __construct(private User $user)
     {
