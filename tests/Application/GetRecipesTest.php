@@ -34,11 +34,21 @@ class GetRecipesTest extends ApplicationTestCase
             ->setOwner($user)
         ;
 
+        $recipeHard = new Recipe();
+        $recipeHard
+            ->setTitle('Test recipe hard')
+            ->setDescription('<DESCRIPTION>')
+            ->setDifficulty(RecipeSkillLevel::HARD)
+            ->setOwner($user)
+        ;
+
         $recipeFixture = new RecipeFixture($recipe);
+        $recipeHardFixture = new RecipeFixture($recipeHard);
 
         $fixture = [
             $this->userFixture,
             $recipeFixture,
+            $recipeHardFixture,
         ];
 
         $this->loadFixtures($fixture);
@@ -48,7 +58,7 @@ class GetRecipesTest extends ApplicationTestCase
     {
         $this->userFixture->authenticate(self::$client);
 
-        $response = self::$client->request(
+        self::$client->request(
             'GET',
             '/api/recipes',
             [],
@@ -64,7 +74,7 @@ class GetRecipesTest extends ApplicationTestCase
         $this->assertEquals('/api/contexts/Recipe', $responseData['@context']);
         $this->assertEquals('/api/recipes', $responseData['@id']);
         $this->assertEquals('Collection', $responseData['@type']);
-        $this->assertEquals(1, $responseData['totalItems']);
+        $this->assertEquals(2, $responseData['totalItems']);
 
         $recipes = $responseData['member'];
 
@@ -72,5 +82,29 @@ class GetRecipesTest extends ApplicationTestCase
         $this->assertEquals('easy', $recipes[0]['difficulty']);
         $this->assertEquals('<DESCRIPTION>', $recipes[0]['description']);
         $this->assertEquals('owner@localhost', $recipes[0]['owner']['email']);
+    }
+
+    public function testGetTheMostDifficultRecipe(): void
+    {
+        $this->userFixture->authenticate(self::$client);
+
+        self::$client->request(
+            'GET',
+            '/api/recipes?difficulty=hard',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
+        );
+
+        $this->assertResponseStatusCodeSame(200);
+
+        $response = self::$client->getResponse();
+        $responseData = json_decode($response->getContent(), true);
+
+        $this->assertEquals(1, $responseData['totalItems']);
+
+        $recipes = $responseData['member'];
+
+        $this->assertEquals('hard', $recipes[0]['difficulty']);
     }
 }

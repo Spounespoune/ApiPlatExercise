@@ -38,7 +38,7 @@ class CreateRecipeTest extends ApplicationTestCase
             '/api/recipes',
             [],
             [],
-            ['CONTENT_TYPE' => 'application/json'],
+            ['CONTENT_TYPE' => 'application/ld+json'],
             '{"name": "Test recipe"}'
         );
 
@@ -48,10 +48,11 @@ class CreateRecipeTest extends ApplicationTestCase
     public function testCreateRecipe(): void
     {
         $this->userFixture->authenticate(self::$client);
+
         $content = json_encode([
             'title' => 'Test recipe',
-            'difficulty' => 'easy',
             'description' => 'Une délicieuse recette de test',
+            'difficulty' => 'easy',
         ]);
 
         self::$client->request(

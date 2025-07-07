@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\UseCases;
 
-use App\Dto\Input\Recipe\CreateRecipeInput;
 use App\Entity\Recipe;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -14,7 +13,7 @@ readonly class CreateRecipeUseCase
     {
     }
 
-    public function execute(CreateRecipeInput $recipeInput): Recipe
+    public function execute(Recipe $recipeInput): Recipe
     {
         $user = $this->security->getUser();
 

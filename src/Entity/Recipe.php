@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\Dto\Input\Recipe\CreateRecipeInput;
 use App\Enum\RecipeSkillLevel;
 use App\Repository\RecipeRepository;
 use App\State\RecipePostStateProcessor;
@@ -23,12 +25,19 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(),
         new GetCollection(),
         new Post(
-            input: CreateRecipeInput::class,
+            security: 'is_granted("ROLE_USER")',
             processor: RecipePostStateProcessor::class
+        ),
+        new Delete(
+            security: 'is_granted("ROLE_USER") and object.getOwner() === user',
         ),
     ],
     normalizationContext: ['groups' => ['read']],
     denormalizationContext: ['groups' => ['write']],
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: ['difficulty' => 'exact', 'title' => 'partial']
 )]
 class Recipe
 {
@@ -123,5 +132,4 @@ class Recipe
     {
         return $this->createdAt;
     }
-
 }
