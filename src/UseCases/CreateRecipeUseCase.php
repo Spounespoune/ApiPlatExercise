@@ -6,17 +6,17 @@ namespace App\UseCases;
 
 use App\Entity\Recipe;
 use App\Entity\User;
-use Symfony\Bundle\SecurityBundle\Security;
+use App\Port\Service\UserProviderInterface;
 
 readonly class CreateRecipeUseCase
 {
-    public function __construct(private Security $security)
+    public function __construct(private UserProviderInterface $userProvider)
     {
     }
 
     public function execute(Recipe $recipeInput): Recipe
     {
-        $user = $this->security->getUser();
+        $user = $this->userProvider->getCurrentUser();
 
         if (!$user instanceof User) {
             throw new \Exception('User not found');

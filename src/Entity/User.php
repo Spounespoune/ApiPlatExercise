@@ -35,6 +35,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 8)]
     private ?string $password = null;
 
+    public static function create(int $id, string $email, string $password): User
+    {
+        $user = new self();
+        $user->id = $id;
+        $user->email = $email;
+        $user->password = $password;
+
+        return $user;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

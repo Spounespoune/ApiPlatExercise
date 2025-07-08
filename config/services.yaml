@@ -8,3 +8,5 @@ services:
 
     ApiPlatform\State\ProcessorInterface:
         alias: api_platform.doctrine.orm.state.persist_processor
+
+    App\Port\Service\UserProviderInterface: '@App\Infrastructure\ForProduction\SymfonyUserProvider'
