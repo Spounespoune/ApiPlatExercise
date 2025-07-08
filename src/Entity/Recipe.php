@@ -138,4 +138,6 @@ class Recipe
     {
         return $this->createdAt;
     }
+
+    // TODO add isOwner(User $user):bool
 }
