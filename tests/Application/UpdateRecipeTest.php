@@ -12,7 +12,7 @@ use App\Tests\Fixtures\RecipeFixture;
 use Fixtures\UserFixture;
 use Infrastructure\ApplicationTestCase;
 
-class EditRecipeTest extends ApplicationTestCase
+class UpdateRecipeTest extends ApplicationTestCase
 {
     private UserFixture $userFixture;
 
