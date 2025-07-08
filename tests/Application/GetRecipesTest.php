@@ -79,7 +79,7 @@ class GetRecipesTest extends ApplicationTestCase
         $recipes = $responseData['member'];
 
         $this->assertEquals('Test recipe', $recipes[0]['title']);
-        $this->assertEquals('easy', $recipes[0]['difficulty']);
+        $this->assertEquals(RecipeSkillLevel::EASY->value, $recipes[0]['difficulty']);
         $this->assertEquals('<DESCRIPTION>', $recipes[0]['description']);
         $this->assertEquals('owner@localhost', $recipes[0]['owner']['email']);
     }
@@ -105,6 +105,6 @@ class GetRecipesTest extends ApplicationTestCase
 
         $recipes = $responseData['member'];
 
-        $this->assertEquals('hard', $recipes[0]['difficulty']);
+        $this->assertEquals(RecipeSkillLevel::HARD->value, $recipes[0]['difficulty']);
     }
 }

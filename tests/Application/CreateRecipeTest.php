@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application;
 
 use App\Entity\User;
+use App\Enum\RecipeSkillLevel;
 use App\Repository\RecipeRepository;
 use Fixtures\UserFixture;
 use Infrastructure\ApplicationTestCase;
@@ -45,14 +46,14 @@ class CreateRecipeTest extends ApplicationTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testCreateRecipe(): void
+    public function testCreateRecipeWithOwner(): void
     {
         $this->userFixture->authenticate(self::$client);
 
         $content = json_encode([
             'title' => 'Test recipe',
             'description' => 'Une délicieuse recette de test',
-            'difficulty' => 'easy',
+            'difficulty' => RecipeSkillLevel::EASY->value,
         ]);
 
         self::$client->request(
