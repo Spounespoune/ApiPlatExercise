@@ -8,7 +8,7 @@ use App\Entity\Recipe;
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 
-readonly class CreateRecipeUseCase
+readonly class EditRecipeUseCase
 {
     public function __construct(private Security $security)
     {
@@ -22,14 +22,8 @@ readonly class CreateRecipeUseCase
             throw new \Exception('User not found');
         }
 
-        $recipe = new Recipe();
-        $recipe
-            ->setTitle($recipeInput->getTitle())
-            ->setDescription($recipeInput->getDescription())
-            ->setDifficulty($recipeInput->getDifficulty())
-            ->setOwner($user)
-        ;
+        $recipeInput->setOwner($user);
 
-        return $recipe;
+        return $recipeInput;
     }
 }
