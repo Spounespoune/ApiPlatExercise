@@ -2,7 +2,7 @@
 
 ## 📋 Description
 
-Ce projet est un exercice de veille technologique sur **API Platform**, une solution complète pour créer des API REST et GraphQL avec Symfony. Il implémente une API de gestion de recettes avec les fonctionnalités CRUD complètes.
+Ce projet est un exercice de veille technologique sur **API Platform**, une solution complète pour créer des API REST avec Symfony. Il implémente une API de gestion de recettes avec les fonctionnalités CRUD complètes.
 
 ## 🚀 Fonctionnalités
 
