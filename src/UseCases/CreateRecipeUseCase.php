@@ -18,7 +18,7 @@ readonly class CreateRecipeUseCase
     {
         $user = $this->security->getUser();
 
-        if (!$user || !$user instanceof User) {
+        if (!$user instanceof User) {
             throw new \Exception('User not found');
         }
 
